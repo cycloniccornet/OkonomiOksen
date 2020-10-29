@@ -1,0 +1,127 @@
+body {
+    font-family: Bahnschrift, serif;
+    background-image: url(../images/okooksenbackground.png);
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    text-shadow:2px 2px 2px #000;
+    color: white
+}
+
+p {
+    text-align: left;
+    font-size: smaller;
+    color: white
+}
+
+th {
+    text-align: right;
+    font-size: large;
+    color: white
+}
+td {
+    color: white;
+}
+
+.input-rente {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.button {
+    text-align: center;
+    width: 50%;
+    font-size: large;
+    height: 40px;
+    margin:auto;
+    position:relative;
+    left: 250px
+}
+
+/* informations boks på hover */
+.information{
+    position: relative;
+    display: inline-block;
+}
+
+.information .informationText{
+    visibility: hidden;
+    width: 170px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /*positioner infoboksen */
+    position: absolute;
+    z-index: 1;
+}
+
+.information:hover .informationText{
+    visibility: visible;
+}
+
+.LoanInput {
+    height: 50px;
+    padding: 12px;
+    border: none;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.container {
+    background:rgba(0,0,0,0.5);
+    border: 5px solid black;
+    border-radius: 15px;
+}
+
+.form-group b{
+    margin: auto;
+    font-size:20px;
+    position:inherit;
+}
+
+.Lån-BeregnUdgift {
+    font-size:Larger;
+    font-family:Bahnschrift, serif;
+    text-align:center;
+}
+
+
+/* Advarsel omkring manglende input fra bruger */
+/* Author: Nicholas */
+
+.alert {
+    padding: 5px;
+    background-color: peru;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+.renteData {
+
+}

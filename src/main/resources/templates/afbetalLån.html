@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:https="http://www.w3.org/1999/xhtml">
+<!-- Author Patrick Jønsson-->
+<head>
+    <meta charset="UTF-8">
+    <title>Afbetaling af lån</title>
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/afbetaling.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/static/img/1147817690.jpeg}" href="/static/images/1147817690.jpeg" rel="stylesheet" media="screen"/>
+</head>
+<body>
+<div class="topnav">
+    <span>
+    <tr th:if="${user.username != null}">
+        <span class="navLogin">
+            <a th:href="@{'/'}+${user.userId}" style="background-color: #9eff9e">Home</a>
+            <a th:href="@{'/delete/'}+${user.userId}">Slet bruger</a>
+            <a th:href="@{'/findOverview/'}+${user.userId}">Se Budget</a>
+        </span>
+        <span class="topnav-centered">
+            <b style="background: linear-gradient(45deg,#000000 0%, #000000 30%, #909090 60%, #909090 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKONOMI</b>
+            <b><img src="/images/okooksenlogo.png" alt="" height="50" width="70"></b>
+            <b style="background: linear-gradient(45deg,#909090 0%, #909090 30%, #000000 60%, #000000 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKSEN</b>
+        </span>
+        <span class="navLogin" style="float: right">
+            <a th:text="'Logget ind som: '" style="color: black"></a>
+            <a th:text="${user.username}" style="color: #9eff9e;font-weight: bold"></a>
+            <a th:href="@{'/'}">Log ud</a>
+        </span>
+    </tr>
+        </span>
+    <tr th:if="${user.username == null}">
+        <span>
+            <div class="login-container">
+                <a class="active" th:href="@{'/'}">Home</a>
+                <a class="navfunction" th:href="@{/createUser}">Opret Bruger</a>
+                <span class="topnav-centered">
+                    <b style="background: linear-gradient(45deg,#000000 0%, #000000 30%, #909090 60%, #909090 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKONOMI</b>
+                    <b><img src="/images/okooksenlogo.png" alt="" height="50" width="70"></b>
+                    <b style="background: linear-gradient(45deg,#909090 0%, #909090 30%, #000000 60%, #000000 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKSEN</b>
+                </span>
+                <span>
+                    <form method="post" th:action="@{'/login'}">
+                        <div class="navInput">
+                            <label><input type="text" placeholder="Username" th:field="${user.username}"></label>
+                            <label><input type="password" placeholder="Password" th:field="${user.password}" style="margin-right: 5px"></label>
+                            <button type="submit">Login</button>
+                        </div>
+                    </form>
+                </span>
+            </div>
+        </span>
+    </tr>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="signup-box">
+
+    <tr th:if="${user.username != null}">
+        <form class="Signup-Form" th:action="@{/loanPayment/userLoan/}+${user.userId}" method="post">
+
+            <div  th:if="${loan.k == 0}">
+                <p>Hovedstol + rente - beregn i funktioner for lån</p>
+                <input class="txtb" th:field="${loan.loanAmount}" type="number" placeholder="Ex. 100.000" required min="50">
+                <p>Rente for dit lån i %</p>
+                <input class="txtb" th:field="${loan.annualInterestRate}" type="number" placeholder="Ex. 12%" required min="1">
+                <p>Antal år på lån</p>
+                <input class="txtb" th:field="${loan.yearOnLoan}" type="number" placeholder="Ex. 5 years" required min="1">
+                <input class="signup-btn" type="submit" value="Beregn MånedligUdgift">
+            </div>
+        </form>
+    </tr>
+
+    <tr th:if="${user.username == null}">
+    <form class="Signup-Form" th:action="@{/loanPayment}" method="post">
+
+    <div  th:if="${loan.k == 0}">
+        <p>Hovedstol + rente - beregn i funktioner for lån</p>
+        <input class="txtb" th:field="${loan.loanAmount}" type="number" placeholder="Ex. 100.000" required min="50">
+        <p>Rente for dit lån i %</p>
+        <input class="txtb" th:field="${loan.annualInterestRate}" type="number" placeholder="Ex. 12%" required min="1">
+        <p>Antal år på lån</p>
+        <input class="txtb" th:field="${loan.yearOnLoan}" type="number" placeholder="Ex. 5 years" required min="1">
+        <input class="signup-btn" type="submit" value="Beregn MånedligUdgift">
+    </div>
+    </form>
+    </tr>
+    <span class="result-box" th:if="${loan.k != 0}">
+    <h1>Resultat for lån</h1>
+    <strong>Dette beløb skal betales månedlig for at afbetale din gæld</strong>
+    <b th:text="${loan.k}"></b>
+    </span>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" ></script>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+</body>
+</html>

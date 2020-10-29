@@ -1,0 +1,78 @@
+/*
+Author Patrick Jønsson
+ */
+
+.topnav {
+    overflow: hidden;
+    background: linear-gradient(to right, #3d794a 0%, #49ec80 50%, #3d794a 100%);
+    position: fixed;width: 100%;
+    -webkit-box-shadow: 0 15px 20px 5px rgba(0,0,0,0.55);
+    -moz-box-shadow: 0 15px 20px 5px rgba(0,0,0,0.55);
+    box-shadow: 0 15px 20px 5px rgba(0,0,0,0.55);
+    z-index: 1;
+}
+
+body {
+    margin: 0;
+    font-family: Bahnschrift, serif;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav input {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    width:200px;
+    border-radius: 8px;
+
+    display:block;
+    box-sizing: border-box;
+    background: #85c785;
+    color: black;
+}
+
+.topnav button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background-color: #555;
+    color: white;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.topnav a.active {
+    background-color: #289e27;
+    color: white;
+}
+
+.topnav a.navlogintext {
+    margin:auto;
+    width: 50%;
+    text-align:center;
+}
+
+.navInput {
+    float:right;
+}
+.topnav-centered {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+}

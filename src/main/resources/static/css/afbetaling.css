@@ -1,0 +1,68 @@
+/*
+Author Patrick Jønsson
+ */
+
+* {
+    font-family: Bahnschrift, serif;
+}
+
+body {
+    margin:0;
+    padding:0;
+    font-family: Bahnschrift,serif;
+}
+
+.signup-box {
+    position:absolute;
+    left:0;
+    width:100%;
+    background-image: linear-gradient(#49ec80, #31354c);
+}
+
+.Signup-Form {
+    position:absolute;
+    top:40%;
+    left:50%;
+    text-align:center;
+    transform: translate(-50%, -50%)
+}
+
+.txtb {
+    display:block;
+    box-sizing: border-box;
+    width: 240px;
+    background: #85c785;
+    border: none;
+    padding: 10px 30px;
+    color: black;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-align:center;
+}
+
+.signup-btn {
+    width:240px;
+    background:#5db36f;
+    padding: 10px;
+    border:none;
+    border-radius: 8px;
+}
+
+
+::placeholder {
+    color: #545654;
+    opacity: 01;
+}
+
+.result-box {
+    position:absolute;
+    top:40%;
+    left:50%;
+    text-align:center;
+    transform: translate(-50%, -50%);
+    background:rgba(0,0,0,0.5);
+    border: 5px solid black;
+    border-radius: 15px;
+    width: 350px;
+    height:130px;
+}

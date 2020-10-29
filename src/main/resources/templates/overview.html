@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Økonomi Øksen - Overblik</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/static/img/1147817690.jpeg}" href="/static/images/1147817690.jpeg" rel="stylesheet" media="screen"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style2.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/png" href="../static/images/okooksenlogo.png" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+<div class="topnav">
+    <span>
+    <tr th:if="${user.username != null}">
+        <span class="navLogin">
+            <a th:href="@{'/'}+${user.userId}" style="background-color: #9eff9e">Home</a>
+            <a th:href="@{'/delete/'}+${user.userId}">Slet bruger</a>
+            <a th:href="@{'/findOverview/'}+${user.userId}">Se Budget</a>
+        </span>
+        <span class="topnav-centered">
+            <b style="background: linear-gradient(45deg,#000000 0%, #000000 30%, #909090 60%, #909090 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKONOMI</b>
+            <b><img src="/images/okooksenlogo.png" alt="" height="50" width="70"></b>
+            <b style="background: linear-gradient(45deg,#909090 0%, #909090 30%, #000000 60%, #000000 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKSEN</b>
+        </span>
+        <span class="navLogin" style="float: right">
+            <a th:text="'Logget ind som: '" style="color: black"></a>
+            <a th:text="${user.username}" style="color: #9eff9e;font-weight: bold"></a>
+            <a th:href="@{'/'}">Log ud</a>
+        </span>
+    </tr>
+        </span>
+    <tr th:if="${user.username == null}">
+        <span>
+            <div class="login-container">
+                <a class="active" th:href="@{'/'}">Home</a>
+                <a class="navfunction" th:href="@{/createUser}">Opret Bruger</a>
+                <span class="topnav-centered">
+                    <b style="background: linear-gradient(45deg,#000000 0%, #000000 30%, #909090 60%, #909090 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKONOMI</b>
+                    <b><img src="/images/okooksenlogo.png" alt="" height="50" width="70"></b>
+                    <b style="background: linear-gradient(45deg,#909090 0%, #909090 30%, #000000 60%, #000000 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">ØKSEN</b>
+                </span>
+                <span>
+                    <form method="post" th:action="@{'/login'}">
+                        <div class="navInput">
+                            <label><input type="text" placeholder="Username" th:field="${user.username}"></label>
+                            <label><input type="password" placeholder="Password" th:field="${user.password}" style="margin-right: 5px"></label>
+                            <button type="submit">Login</button>
+                        </div>
+                    </form>
+                </span>
+            </div>
+        </span>
+    </tr>
+</div>
+<br><br><br><br><br><br>
+<h1 style="font-size: 70px;color: white;text-align: center">OVERSIGT OVER BUDGET</h1>
+<br>
+<div class="container" style="background:rgba(0,255,0,0.1);border: 5px solid black">
+    <br>
+    <h3>Indkomster</h3>
+
+    <br>
+    <table class="table" style="border: 1px solid white">
+        <tr style="height: 30px">
+            <th class="tablehead">Løn</th>
+            <td th:if="(${income.salary}) == 0 ">
+                <span th:text="${income.salary}+' kr.'"></span><div class="alert"><span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span><strong>Mangel! </strong> Der mangler input på løn</div>
+                <!--<span th:text="${income.salary}+' kr.'"></span><span th:text="'OBS - Du bør finde en indtægtskilde gennem arbejde!'" style="color: red;float: right"></span>-->
+            </td>
+            <td th:if="(${income.salary}) > 0 ">
+                <span th:text="${income.salary}+' kr.'"></span>
+            </td>
+        </tr>
+        <tr>
+            <th class="tablehead">Boligstøtte</th>
+            <td th:if="(${income.housingSubsidy}) == 0">
+                <span th:text="${income.housingSubsidy}+' kr.'"></span><div class="alert"><span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span><strong>Mangel! </strong> Du får ikke boligstøtte, se om dette kan lade sig gøre for dig ved at klikke
+                <a href="https://www.borger.dk/Handlingsside?selfserviceId=a153fd97-6252-4058-ac3f-5a59079cbded">her.</a></div>
+                <!-- <span style="color: blue;float: right"><a href="https://www.borger.dk/Handlingsside?selfserviceId=a153fd97-6252-4058-ac3f-5a59079cbded" target="_blank">boligstøtte.dk</a></span>
+                <span th:text="'OBS - Mulighed for boligsikrings tilskud - tjek '" style="color: red;float: right;margin-right: 1%"></span>-->
+            </td>
+            <td th:if="(${income.housingSubsidy}) > 0">
+                <span th:text="${income.housingSubsidy}+' kr.'"></span>
+            </td>
+        </tr>
+        <tr>
+            <th class="tablehead">Aktier</th>
+            <td th:text="${income.equities}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">Øvrige indtægter</th>
+            <td th:text="${income.others}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">I Alt</th>
+            <td th:text="${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others}+' kr.'"></td>
+        </tr>
+    </table>
+</div>
+<br>
+<div class="container" style="background:rgba(255,0,0,0.4);border: 5px solid black">
+    <br>
+    <h3>Udgifter</h3>
+    <br>
+    <table class="table" style="border: 1px solid white">
+        <tr>
+            <th class="tablehead">Bolig udgifter</th>
+            <td th:if="(${expense.residential}) == 0 ">
+                <span th:text="${expense.residential}+' kr.'"></span><div class="alert"><span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span><strong>Mangel! </strong> Der mangler input bolig posten</div>
+            </td>
+            <td th:if="(${expense.residential}) > 0 ">
+                <span th:text="${expense.residential}+' kr.'"></span>
+            </td>
+        </tr>
+        <tr>
+            <th class="tablehead">Øvrige faste udgifter</th>
+            <td th:text="${expense.regulars}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">Transport</th>
+            <td th:text="${expense.transport}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">Mad</th>
+            <td th:text="${expense.food}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">Diverse</th>
+            <td th:text="${expense.miscellaneous}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">Lån afbetaling</th>
+            <td th:text="${expense.loan}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">I Alt</th>
+            <td th:text="${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan}+' kr.'"></td>
+        </tr>
+    </table>
+</div>
+<br>
+<div class="container" style="background:rgba(0,0,0,0.4);border: 5px solid black">
+    <br>
+    <h3>Ialt</h3>
+    <br>
+    <table class="table" style="border: 1px solid white">
+        <tr>
+            <th class="tablehead">Indtægter</th>
+            <td th:text="${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">Udgifter</th>
+            <td th:text="${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan}+' kr.'"></td>
+        </tr>
+        <tr>
+            <th class="tablehead">I Alt</th>
+            <td th:if="(${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others})-(${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan}) < 0">
+                <span th:text="(${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others})-(${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan})+' kr.'" style="color: #ff4747"></span>
+            </td>
+            <td th:if="(${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others})-(${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan}) > 0">
+                <span th:text="(${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others})-(${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan})+' kr.'" style="color: lawngreen"></span>
+            </td>
+            <td th:if="(${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others})-(${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan}) == 0">
+                <span th:text="(${income.salary}+${income.housingSubsidy}+${income.equities}+${income.others})-(${expense.residential}+${expense.regulars}+${expense.transport}+${expense.food}+${expense.miscellaneous}+${expense.loan})+' kr.'" style="color: white"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<div class="container" style="background:rgba(255,255,255,0.4);border: 5px solid black">
+    <br>
+    <h3>Grafer</h3>
+    <br>
+    <img src="/images/PieChartExpense.png" width="500" height="500" alt="Kagediagram her..." style="margin-right: 5%;margin-left: 2%">
+    <img src="/images/BarChartExpense.png" width="500" height="500" alt="Søjlediagram her..."/>
+    <br>
+    <br>
+    <img src="/images/PieChartIncome.png" width="500" height="500" alt="Kagediagram her..." style="margin-right: 5%;margin-left: 2%">
+    <img src="/images/BarChartIncome.png" width="500" height="500" alt="Søjlediagram her..."/>
+    <br><br>
+</div>
+<br>
+<div style="text-align: center;font-size: larger">
+    <a href="18/../downloadable/budget.csv" download>Download til fil</a>
+</div>
+<br><br>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
